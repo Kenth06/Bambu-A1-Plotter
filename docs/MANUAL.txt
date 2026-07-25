@@ -1,0 +1,365 @@
+==================================================================
+ BAMBU A1 PLOTTER — INSTRUCTIONS
+ Image / SVG -> Pen Plotter G-code, for the Bambu Lab A1 ONLY
+==================================================================
+
+This tool converts images and SVG files into G-code that turns your
+Bambu Lab A1 into a pen plotter, using a pen mounted in place of (or
+alongside) the print head. It runs entirely in your browser — nothing
+you upload is ever sent anywhere. No install, no account, no internet
+connection required once the file is downloaded.
+
+This is the FREE version: image trace, single-colour SVG import, and
+every machine setting. Multi-colour layers with hatch fill, plotted
+text, QR codes, common frame guides, and ASCII art are part of the
+Pro version of this tool.
+
+
+------------------------------------------------------------------
+ 1. WARNINGS — READ THIS FIRST
+------------------------------------------------------------------
+
+  USE AT YOUR OWN RISK.
+
+  This tool generates machine motion commands for a 3D printer being
+  used outside its intended purpose. Incorrect configuration can
+  cause the toolhead to crash, drag across the bed, or damage the
+  printer, the pen mount, or the print surface.
+
+  - This tool is built and tested for the BAMBU LAB A1 ONLY.
+    It is NOT verified on the A1 Mini, P1P, P1S, X1 Carbon, or any
+    other printer. Those machines use different bed sizes, different
+    motion systems (some move the toolhead, others move the bed),
+    and may behave differently when paused or homed. Do not assume
+    this G-code is safe on any printer other than the A1.
+
+  - Always let the SETUP HOLD and BOUNDARY CHECK finish before
+    walking away from a plot (see Section 5). These exist so you can
+    catch a mistake before the pen starts drawing.
+
+  - Always verify your printer's nozzle is set to 0.4mm in both the
+    printer's own settings and in Bambu Studio's active printer
+    profile. The G-code in this tool is generated assuming a 0.4mm
+    nozzle profile — a mismatch can cause Bambu Studio or the
+    printer to reject the file, or behave unpredictably.
+
+  - Never let the nozzle preheat. This tool commands heaters off,
+    but if you manually preheat the nozzle before running a plot,
+    remove that filament and heat source first. This is a pen
+    plotter conversion — there should be no filament loaded and no
+    reason for heat at any point in this process.
+
+  - The author accepts no liability for damage to your printer,
+    your workspace, or any injury arising from use of this tool.
+    You are responsible for supervising your printer during use.
+
+
+------------------------------------------------------------------
+ 2. WHAT YOU NEED
+------------------------------------------------------------------
+
+  - A Bambu Lab A1 printer
+  - A pen mount for the FRONT of the toolhead (see Section 7 for
+    what makes a good one). You fit the pen during the setup hold,
+    not before the plot starts — see Section 5.
+  - Bambu Studio, for sending the G-code to your printer
+  - Any modern browser (Chrome, Firefox, Safari, Edge)
+  - The printer's nozzle set to 0.4mm, both on the printer itself
+    and in Bambu Studio's active printer profile
+  - Paper taped down firmly on all four sides
+
+
+------------------------------------------------------------------
+ 3. THE INTERFACE
+------------------------------------------------------------------
+
+  The tool is a single page: a settings sidebar on the left, and a
+  preview/output area on the right. Every sidebar section is
+  collapsed when the page loads — click a section's title to open
+  it.
+
+  SOURCE
+    Drop an image (JPG, PNG, WEBP) or an SVG file, or click to
+    browse. Images can be rotated 90 degrees either way before
+    tracing. SVG paths are sampled directly and plotted as a single
+    colour — per-colour layer control is a Pro feature. "Remove
+    image" clears the source.
+
+  TRACE
+    Converts a raster image (JPG/PNG/WEBP) into plotted linework.
+    Three modes:
+      - Sketch: traces edges into clean lines.
+      - Halftone: converts tone into a grain or dot pattern.
+      - Lo-fi: traces at reduced resolution for a chunky, stepped
+        look.
+    Each mode exposes different sliders, also mirrored as a two-
+    slider quick strip under the Vector preview for fast tweaking
+    without opening the sidebar. Brightness, Contrast, and Light
+    Image Boost (auto-contrast) adjust the source image before
+    tracing; Invert is for tracing light-on-dark images.
+
+  BED & PLACEMENT
+    Bed size and how the artwork is placed on it (Centered,
+    Anchored to a corner, or Custom), plus margins.
+
+  PEN (Z-LIFT)
+    Pen Down Z, Pen Up (safe) Z, the Setup/swap hold time, and the
+    Pen Y Offset — see Section 4, First-Time Setup, for how to
+    measure and set these correctly before your first plot.
+
+  VECTOR PREVIEW / DRAW SIMULATION / G-CODE
+    Three tabs above the main preview:
+      - Vector preview: a fixed, true-to-scale view of the plate
+        with your artwork at its real position.
+      - Draw simulation: the same view, animated to show the order
+        strokes will be drawn in — use Play/Pause, the scrub bar,
+        and the speed slider to step through it.
+      - G-code: the generated file, with Download and Copy buttons.
+    Both preview tabs have zoom controls (−, percentage, +, Reset)
+    above the panel — zoom in for detail work. If the zoomed view
+    is larger than your window, scroll to reach the rest of it.
+
+
+------------------------------------------------------------------
+ 4. FIRST-TIME SETUP (do this once)
+------------------------------------------------------------------
+
+  The key idea: you do NOT fit the pen before starting a plot. The
+  printer homes first (which touches the nozzle down to the plate),
+  and only then pauses with the toolhead in position for you to fit
+  and calibrate the pen. This keeps the pen well clear of the
+  homing routine. See Section 5 for the full sequence.
+
+  What to set up once, before your first plot:
+
+  1. Fit your pen HOLDER (empty, no pen yet, or with the pen
+     retracted) to the FRONT of the toolhead, so that when a pen is
+     installed its tip will sit forward of where the nozzle points
+     down. This forward position is what the tool's coordinate math
+     is built around.
+
+  2. Measure the distance from the nozzle tip to where your pen tip
+     will sit, along the Y axis only (front-to-back). This distance
+     is your PEN Y OFFSET. The tool defaults to 48mm — this is very
+     likely wrong for your specific mount and pen. Measure your own
+     setup; don't rely on the default.
+
+  3. Open the tool in your browser. Under Bed & Placement, enter
+     your measured Pen Y Offset.
+
+  4. Under Pen (Z-lift), set Pen Down Z to roughly where the pen
+     tip should sit to touch the paper. This just needs to be in
+     the right ballpark — you fine-tune the actual contact by
+     adjusting the pen in its mount during the hold, not by
+     perfecting this number.
+
+  5. Confirm your printer and Bambu Studio's active profile are
+     both set to a 0.4mm nozzle.
+
+  6. Run one test plot on scrap paper first. Use the setup hold to
+     fit and calibrate the pen (Section 5), then watch the Boundary
+     Check trace to confirm the plot stays on the plate. Only
+     proceed to a real piece once both look right.
+
+
+------------------------------------------------------------------
+ 5. HOW A PLOT RUNS — WHAT TO EXPECT
+------------------------------------------------------------------
+
+  Every plot follows the same sequence:
+
+  1. HOMING — the printer homes all axes (G28). This is mandatory
+     and cannot be skipped; it's what keeps the origin accurate.
+
+     The A1 homes Z by touching the nozzle position down to the
+     plate. Because you fit the pen AFTER homing (during the hold,
+     next step), the pen is nowhere near the plate during this
+     touch-off — which is exactly why the workflow is ordered this
+     way. Keep the pen out of the mount, or retracted, until the
+     hold begins.
+
+  2. SETUP HOLD — the toolhead travels to the FRONT-LEFT corner of
+     your artwork, lowers to pen-down height, and holds perfectly
+     still for a set time (30 seconds by default). This is when you
+     FIT AND CALIBRATE THE PEN:
+
+       - Slide the pen into the mount until its tip just touches
+         the paper at the corner.
+       - Nip up the mount's clamp so the pen can't move.
+       - That's your calibration — the tip is now set to the paper
+         surface at a known, repeatable point.
+
+     Because the hold always happens at the same corner at the same
+     height, every plot calibrates from an identical reference. If
+     the default time is too short to fit the pen comfortably,
+     raise it: under Pen (Z-lift), the "Setup / swap hold time"
+     slider goes 5-120 seconds. Lower it once you're quick at it.
+
+  3. BOUNDARY CHECK — after the hold, the pen lifts and traces the
+     outline of the artwork's bounding box with the pen UP (no
+     marks made). Watch this closely. If the head travels toward
+     an edge or off the visible plate, STOP the print immediately
+     — something is misconfigured (usually the Pen Y Offset).
+
+  4. PLOTTING — the pen lowers and the artwork draws.
+
+     Note: the Free version plots a single colour, so there is no
+     colour-swap stage — plotting runs straight through once it
+     starts. (Multi-colour SVG layers, with their own pen-swap
+     hold between passes, are part of the Pro version.)
+
+------------------------------------------------------------------
+ 6. THICKER PAPER, CARD, AND OTHER SURFACES
+------------------------------------------------------------------
+
+  The tool isn't limited to standard paper. Card, thick watercolour
+  stock, or anything raised above the plate simply sits closer to
+  the pen, so the pen needs to travel less far down to reach it.
+
+  The control for this is PEN DOWN Z (under Pen (Z-lift)). It sets
+  how far the pen lowers on the "pen down" move, measured as a
+  height in mm above the build plate (the default of 1mm means the
+  toolhead stops 1mm above the plate). Higher values keep the pen
+  higher; the thicker your surface, the higher the pen should stop.
+
+  - Thin paper: Pen Down Z near your normal calibrated value.
+  - Thicker card / stock: increase Pen Down Z so the pen stops
+    higher, since the surface top is now closer to the pen.
+  - Very thick or uneven surfaces: increase it further, and lean on
+    a spring mount (Section 7) to absorb the variation across the
+    sheet.
+
+  You don't have to get this exact. Pen Down Z just needs to be in
+  the right ballpark — the real contact is still set by sliding the
+  pen in its mount during the setup hold, exactly as with normal
+  paper. Set Pen Down Z for roughly the right height, then fine-tune
+  the tip against the surface when the hold begins.
+
+  Whatever the surface, always tape it down flat and firmly on all
+  sides. Card can bow or lift as the pen drags across it, and any
+  movement ruins registration.
+
+------------------------------------------------------------------
+ 7. PEN HOLDER / MOUNT — WHAT MAKES A GOOD ONE
+------------------------------------------------------------------
+
+  The quality of your physical pen mount matters as much as the
+  software settings. A few qualities to look for or build toward:
+
+  - FRONT-MOUNTED (attached ahead of the nozzle, not replacing it)
+    The pen holder attaches to the toolhead in front of the nozzle
+    — the nozzle stays in place, the pen sits forward of it. This
+    is what this tool's whole coordinate model assumes (the "Pen Y
+    Offset" setting). A clean front-mounted position keeps that
+    offset simple, consistent, and small.
+
+  - A SPRING MECHANISM
+    A spring-loaded holder lets the pen tip float slightly rather
+    than being locked rigidly to the toolhead. Its main benefit is
+    compensating for small inconsistencies in paper thickness and
+    bed flatness across a plot, keeping line pressure consistent
+    without needing a perfect Z number. It also gives you a little
+    forgiveness when you set the tip against the paper during the
+    hold — the spring takes up minor over-travel instead of
+    digging the tip in or lifting it off. (Because the pen is
+    fitted after homing, the mount no longer needs to survive the
+    Z touch-off, but the pressure consistency alone makes a spring
+    well worth it.)
+
+  - PENS WITH FRICTION-TOLERANT TIPS
+    The pen tip will be dragged sideways across paper repeatedly
+    at speed. Fine felt-tips and very soft brush pens wear down or
+    fray quickly under this kind of lateral dragging. Look for
+    tips built to handle sustained friction — technical fineliners
+    (rated for repeated linework), ballpoints, gel pens, and hard
+    plastic or metal-nib pens all hold up well. Soft brush-tip
+    markers are the least suited to plotting.
+
+  - AN ADJUSTABLE TIGHTNESS / CLAMP
+    Pens vary a lot in barrel diameter. A mount with an adjustable
+    clamp, grub screw, or friction-fit collar that can be tuned per
+    pen means you're not limited to one exact pen model, and you
+    can dial in enough grip to stop the pen twisting or slipping
+    during fast direction changes without over-tightening and
+    cracking a thin barrel.
+
+  If you're 3D printing a mount, these four qualities
+  are essential.
+
+------------------------------------------------------------------
+ 8. TROUBLESHOOTING
+------------------------------------------------------------------
+
+  Plot is offset from where the simulation showed it
+    -> Your Pen Y Offset is likely wrong. Re-measure the physical
+       distance from nozzle position to pen tip.
+
+  Pen won't reach the paper at the hold
+    -> Slide the pen further down in its mount until the tip meets
+       the paper, then tighten. That's the intended fix — you set
+       contact by moving the pen, not by chasing the Pen Down Z
+       number. If the pen bottoms out in the mount and still can't
+       reach, lower Pen Down Z slightly (bringing the toolhead
+       closer to the plate) and re-run.
+
+  Pen presses too hard / drags / digs in at the hold
+    -> Back the pen up slightly in the mount before tightening. A
+       spring mount gives you some forgiveness here.
+
+  Pen lifts off the paper in some areas of the bed but not others
+    -> Your plate is not perfectly flat, and this tool plots as
+       though it were. Every printer bed deviates a little, usually
+       most toward the back, and a pen has none of the give that
+       molten filament does: a few tenths of a millimetre is the
+       difference between a solid line and no line at all.
+
+       There is no setting in the tool that fixes this. What helps,
+       roughly in order of how much difference it makes:
+
+       - A spring-loaded pen mount (Section 7). This is the real
+         answer, and it is what plotters have always used. The
+         spring absorbs the variation mechanically, so the pen
+         keeps contact across the whole sheet.
+       - Plot nearer the centre and front of the plate, where the
+         surface is usually flattest. Shrinking the artwork a
+         little is often enough.
+       - Lower the Pen Down Z slightly (Section 4) so the pen
+         presses harder everywhere. This trades one problem for
+         another: it will fix the light areas but press harder in
+         the areas that were already fine, which can broaden lines
+         or splay a soft nib.
+       - Run a bed calibration from the printer's own screen. Worth
+         doing, but on its own it will not solve this.
+
+  Boundary check trace goes off the visible plate
+    -> Stop the print. Check Pen Y Offset and your placement
+       setting (Centered / Anchored / Custom) before trying again.
+
+  Nozzle heats up during a park / pause
+    -> This is normal and expected. When the A1 performs a firmware
+       park, the printer's own built-in routine heats the nozzle —
+       this is hardcoded into the printer's firmware and can't be
+       switched off from the G-code. It's harmless for pen
+       plotting: there's no filament loaded, so nothing extrudes,
+       and the tool re-issues heaters-off commands as soon as the
+       plot resumes. Just let it do its thing and carry on. (Do not
+       manually load filament or leave any in the hotend.)
+
+  Bambu Studio rejects the file or shows a nozzle mismatch
+    -> Confirm the nozzle is set to 0.4mm in BOTH the printer's own
+       settings and in Bambu Studio's currently active profile.
+
+  A sidebar section won't show its controls
+    -> Sections start collapsed when the page loads. Click the
+       section's title to open it.
+
+  Vector preview or draw simulation looks too small to work with
+    -> Use the −, +, and Reset buttons above the panel to zoom in.
+
+
+------------------------------------------------------------------
+ That's it — enjoy plotting.
+ Runs entirely in your browser. Nothing is ever uploaded.
+
+ Project: https://github.com/Kenth06/Bambu-A1-Plotter
+==================================================================
