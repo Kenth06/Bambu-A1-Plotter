@@ -57,3 +57,38 @@ across the bed, or damage the printer, the pen mount, or the build surface.
 
 Not included: multi-colour layer separation with hatch fill, plotted text, QR codes,
 frame guides and ASCII art.
+
+## What you need
+
+| Item | Notes |
+| --- | --- |
+| Bambu Lab A1 | This machine only — see the warning above. |
+| Pen mount | Fitted to the **front** of the toolhead. The nozzle stays in place. |
+| Bambu Studio | For sending the generated G-code to the printer. |
+| A modern browser | Chrome, Firefox, Safari or Edge. |
+| 0.4 mm nozzle profile | Set on the printer *and* in the active Bambu Studio profile. |
+| Paper | Taped down firmly on all four sides. |
+
+## First-time setup
+
+Do this once, before your first plot.
+
+The key idea: **you do not fit the pen before starting a plot.** The printer homes
+first — which touches the nozzle down to the plate — and only then pauses with the
+toolhead in position for you to fit and calibrate the pen. This keeps the pen well
+clear of the homing routine.
+
+1. Fit the pen **holder** to the front of the toolhead, empty (or with the pen
+   retracted), so that an installed pen tip would sit forward of the nozzle. The
+   tool's coordinate math is built around this forward position.
+2. Measure the nozzle tip to pen tip distance **along the Y axis only**
+   (front-to-back). That is your **Pen Y Offset**. The default of 48 mm is very
+   likely wrong for your mount and pen — measure your own.
+3. Open the tool and enter the measured offset under **Bed & Placement**.
+4. Under **Pen (Z-lift)**, set **Pen Down Z** to roughly where the pen tip should sit
+   to touch the paper. Ballpark is fine; real contact is set by sliding the pen in
+   its mount during the setup hold, not by perfecting this number.
+5. Confirm the 0.4 mm nozzle setting in both places.
+6. Run one test plot on scrap paper. Use the setup hold to fit and calibrate the pen,
+   then watch the boundary check confirm the plot stays on the plate. Only move to a
+   real piece once both look right.
