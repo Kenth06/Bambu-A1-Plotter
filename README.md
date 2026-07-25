@@ -209,3 +209,56 @@ least suited to plotting.
 grub screw or tunable friction collar means you are not tied to one pen model, and
 you can dial in enough grip to stop the pen twisting during fast direction changes
 without over-tightening and cracking a thin barrel.
+
+## Troubleshooting
+
+**Plot is offset from where the simulation showed it.**
+The Pen Y Offset is probably wrong. Re-measure the physical distance from the nozzle
+position to the pen tip.
+
+**Pen will not reach the paper at the hold.**
+Slide the pen further down in the mount until the tip meets the paper, then tighten.
+That is the intended fix — contact is set by moving the pen, not by chasing the Pen
+Down Z number. If the pen bottoms out in the mount and still cannot reach, lower Pen
+Down Z slightly and re-run.
+
+**Pen presses too hard, drags or digs in at the hold.**
+Back the pen up slightly in the mount before tightening. A spring mount gives you
+some forgiveness here.
+
+**Pen lifts off the paper in some areas of the bed but not others.**
+The plate is not perfectly flat and the tool plots as though it were. Every bed
+deviates a little, usually most toward the back, and a pen has none of the give
+molten filament does — a few tenths of a millimetre is the difference between a solid
+line and no line at all. No setting fixes this. What helps, in order of impact:
+
+1. A spring-loaded pen mount. This is the real answer, and what plotters have always
+   used — the spring absorbs the variation mechanically.
+2. Plot nearer the centre and front of the plate, where the surface is usually
+   flattest. Shrinking the artwork slightly is often enough.
+3. Lower Pen Down Z slightly so the pen presses harder everywhere. This trades one
+   problem for another: it fixes the light areas but presses harder where things were
+   already fine, which can broaden lines or splay a soft nib.
+4. Run a bed calibration from the printer's screen. Worth doing, but not a fix on its
+   own.
+
+**Boundary check goes off the visible plate.**
+Stop the print. Check Pen Y Offset and the placement setting (Centered / Anchored /
+Custom) before trying again.
+
+**Nozzle heats up during a park or pause.**
+Normal and expected. The A1's firmware park routine heats the nozzle; it is hardcoded
+into the printer and cannot be switched off from G-code. It is harmless for plotting
+— no filament is loaded, so nothing extrudes — and the tool re-issues heaters-off
+commands as soon as the plot resumes. Do not manually load filament or leave any in
+the hotend.
+
+**Bambu Studio rejects the file or reports a nozzle mismatch.**
+Confirm the nozzle is set to 0.4 mm in both the printer's own settings and the
+currently active Bambu Studio profile.
+
+**A sidebar section shows no controls.**
+Sections start collapsed. Click the section title to open it.
+
+**The preview or simulation is too small to work with.**
+Use the −, + and Reset buttons above the panel to zoom.
