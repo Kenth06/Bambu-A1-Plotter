@@ -1,6 +1,6 @@
 ==================================================================
  BAMBU A1 PLOTTER — INSTRUCTIONS
- Image / SVG -> Pen Plotter G-code, for the Bambu Lab A1 ONLY
+ Image / SVG -> pen plotter G-code, for the Bambu Lab A1 ONLY
 ==================================================================
 
 This tool converts images and SVG files into G-code that turns your
@@ -50,7 +50,7 @@ ASCII art.
     plotter conversion — there should be no filament loaded and no
     reason for heat at any point in this process.
 
-  - The author accepts no liability for damage to your printer,
+  - No liability is accepted for damage to your printer,
     your workspace, or any injury arising from use of this tool.
     You are responsible for supervising your printer during use.
 
