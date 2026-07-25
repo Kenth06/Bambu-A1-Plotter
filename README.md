@@ -122,3 +122,42 @@ usually the Pen Y Offset.
 
 **4. Plotting.** The pen lowers and the artwork draws. A single colour is plotted, so
 there is no colour-swap stage: once plotting starts it runs straight through.
+
+## Interface reference
+
+One page: a settings sidebar on the left, preview and output on the right. Every
+sidebar section starts collapsed — click a section title to open it.
+
+### Source
+Drop an image (JPG / PNG / WEBP) or an SVG, or click to browse. Images can be rotated
+90° either way before tracing. SVG paths are sampled directly and plotted as a single
+colour. *Remove image* clears the source.
+
+### Trace
+Converts a raster image into plotted linework.
+
+- **Sketch** — traces edges into clean lines.
+- **Halftone** — converts tone into a grain or dot pattern.
+- **Lo-fi** — traces at reduced resolution for a chunky, stepped look.
+
+Each mode exposes its own sliders, mirrored as a two-slider quick strip under the
+vector preview for fast tweaking without opening the sidebar. Brightness, Contrast
+and Light Image Boost (auto-contrast) adjust the source before tracing; Invert is for
+light-on-dark sources.
+
+### Bed & Placement
+Bed size, how the artwork is placed on it (Centered, Anchored to a corner, or
+Custom), margins, and the Pen Y Offset.
+
+### Pen (Z-lift)
+Pen Down Z, Pen Up (safe) Z, and the setup / swap hold time.
+
+### Preview tabs
+- **Vector preview** — fixed, true-to-scale view of the plate with the artwork at its
+  real position.
+- **Draw simulation** — the same view animated in stroke order, with play/pause, a
+  scrub bar and a speed slider.
+- **G-code** — the generated file, with Download and Copy.
+
+Both preview tabs have zoom controls (−, percentage, +, Reset) above the panel. If
+the zoomed view is larger than the window, scroll to reach the rest of it.
