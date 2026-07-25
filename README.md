@@ -161,3 +161,51 @@ Pen Down Z, Pen Up (safe) Z, and the setup / swap hold time.
 
 Both preview tabs have zoom controls (−, percentage, +, Reset) above the panel. If
 the zoomed view is larger than the window, scroll to reach the rest of it.
+
+## Thicker paper, card and other surfaces
+
+The tool is not limited to standard paper. Card, thick watercolour stock, or anything
+raised above the plate sits closer to the pen, so the pen needs to travel less far
+down to reach it.
+
+The control for this is **Pen Down Z**: how far the pen lowers on a pen-down move,
+measured as a height in mm above the build plate (the default of 1 mm stops the
+toolhead 1 mm above the plate). Higher values keep the pen higher — the thicker the
+surface, the higher the pen should stop.
+
+- **Thin paper** — Pen Down Z near your normal calibrated value.
+- **Thicker card / stock** — increase it, since the surface top is closer to the pen.
+- **Very thick or uneven surfaces** — increase further, and lean on a spring mount to
+  absorb the variation across the sheet.
+
+This does not need to be exact. Pen Down Z only needs to be in the right ballpark;
+real contact is still set by sliding the pen in its mount during the setup hold.
+
+Whatever the surface, tape it down flat and firmly on all sides. Card can bow or lift
+as the pen drags across it, and any movement ruins registration.
+
+## Choosing a pen mount
+
+The physical mount matters as much as the software settings. Four qualities to look
+for or build toward:
+
+**Front-mounted.** The holder attaches ahead of the nozzle rather than replacing it —
+the nozzle stays, the pen sits forward of it. The tool's whole coordinate model
+assumes this (that is what Pen Y Offset measures). A clean front position keeps the
+offset simple, consistent and small.
+
+**A spring mechanism.** A spring-loaded holder lets the tip float slightly instead of
+being locked rigidly to the toolhead. It compensates for small inconsistencies in
+paper thickness and bed flatness, keeping line pressure consistent without a perfect
+Z number, and gives you forgiveness when setting the tip against the paper during the
+hold — the spring absorbs minor over-travel instead of digging in or lifting off.
+
+**A friction-tolerant tip.** The tip is dragged sideways across paper repeatedly at
+speed. Technical fineliners, ballpoints, gel pens and hard plastic or metal nibs hold
+up well. Fine felt-tips and soft brush pens fray or wear down quickly and are the
+least suited to plotting.
+
+**An adjustable clamp.** Pen barrels vary a lot in diameter. An adjustable clamp,
+grub screw or tunable friction collar means you are not tied to one pen model, and
+you can dial in enough grip to stop the pen twisting during fast direction changes
+without over-tightening and cracking a thin barrel.
