@@ -10,10 +10,10 @@ never removed. It runs entirely in your browser: nothing you load is
 ever uploaded anywhere. No install, no account, and no internet
 connection needed once the file is downloaded.
 
-This is the FREE version: image trace, single-colour SVG import, and
-every machine setting. Multi-colour layers with hatch fill, plotted
-text, QR codes, common frame guides, and ASCII art are part of the
-Pro version of this tool.
+What is included: raster image tracing, single-colour SVG import and
+the full set of machine settings. Not included: multi-colour layer
+separation with hatch fill, plotted text, QR codes, frame guides and
+ASCII art.
 
 
 ------------------------------------------------------------------
@@ -83,7 +83,7 @@ Pro version of this tool.
     Drop an image (JPG, PNG, WEBP) or an SVG file, or click to
     browse. Images can be rotated 90 degrees either way before
     tracing. SVG paths are sampled directly and plotted as a single
-    colour — per-colour layer control is a Pro feature. "Remove
+    colour — per-colour layer separation is not included. "Remove
     image" clears the source.
 
   TRACE
@@ -204,10 +204,9 @@ Pro version of this tool.
 
   4. PLOTTING — the pen lowers and the artwork draws.
 
-     Note: the Free version plots a single colour, so there is no
-     colour-swap stage — plotting runs straight through once it
-     starts. (Multi-colour SVG layers, with their own pen-swap
-     hold between passes, are part of the Pro version.)
+     Note: this tool plots a single colour, so there is no
+     colour-swap stage — once plotting starts it runs straight
+     through to the end without pausing.
 
 ------------------------------------------------------------------
  6. THICKER PAPER, CARD, AND OTHER SURFACES
