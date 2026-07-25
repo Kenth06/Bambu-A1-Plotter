@@ -262,3 +262,25 @@ Sections start collapsed. Click the section title to open it.
 
 **The preview or simulation is too small to work with.**
 Use the −, + and Reset buttons above the panel to zoom.
+
+## Repository layout
+
+```
+index.html        the entire tool — open this in a browser
+docs/MANUAL.txt   plain-text manual, same as the in-app download
+```
+
+There is no build step and there are no dependencies. `index.html` is self-contained:
+markup, styles and script in one file, with no external requests at runtime.
+
+## Privacy
+
+Everything runs locally in the browser. Images, SVGs and generated G-code never leave
+the machine — the page makes no network requests and works with the connection off.
+
+## Disclaimer
+
+Provided as-is, with no warranty. Using a 3D printer as a pen plotter is outside its
+intended purpose and carries real risk of damage. No liability is accepted for damage
+to your printer, your workspace, or for any injury arising from use of this tool. You
+are responsible for supervising the machine while it runs.
