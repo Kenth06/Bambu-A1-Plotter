@@ -92,3 +92,33 @@ clear of the homing routine.
 6. Run one test plot on scrap paper. Use the setup hold to fit and calibrate the pen,
    then watch the boundary check confirm the plot stays on the plate. Only move to a
    real piece once both look right.
+
+## How a plot runs
+
+Every plot follows the same four stages.
+
+**1. Homing (G28).** Mandatory and not skippable — it is what keeps the origin
+accurate. The A1 homes Z by touching the nozzle position down to the plate. Because
+the pen is fitted *after* homing, it is nowhere near the plate during that touch-off.
+Keep the pen out of the mount, or retracted, until the hold begins.
+
+**2. Setup hold.** The toolhead travels to the **front-left corner** of your artwork,
+lowers to pen-down height and holds still (30 s by default). This is when you fit and
+calibrate the pen:
+
+- Slide the pen into the mount until the tip just touches the paper at that corner.
+- Nip up the clamp so the pen cannot move.
+- That is the calibration — the tip is now set to the paper surface at a known,
+  repeatable point.
+
+The hold is always at the same corner at the same height, so every plot calibrates
+from an identical reference. If 30 s is too short, raise it: **Pen (Z-lift) → Setup /
+swap hold time**, range 5–120 s.
+
+**3. Boundary check.** The pen lifts and traces the outline of the artwork's bounding
+box **pen up**, making no marks. Watch this closely. If the head heads for an edge or
+off the visible plate, **stop the print immediately** — something is misconfigured,
+usually the Pen Y Offset.
+
+**4. Plotting.** The pen lowers and the artwork draws. A single colour is plotted, so
+there is no colour-swap stage: once plotting starts it runs straight through.
